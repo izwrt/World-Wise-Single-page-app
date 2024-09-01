@@ -4,6 +4,7 @@ import Homepage from "./pages/Homepage";
 import Pricing from "./pages/Pricing";
 import Product from "./pages/Pricing";
 import "./index.css"
+import AppLayout from "./pages/AppLayout";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/product",
     element: <Product/>
+  },
+  {
+    path: "/app",
+    element: <AppLayout/>
   }
 ]);
 

@@ -5,7 +5,7 @@ import Logo from "./Logo";
 const PageNav = () => {
     return(
         <nav className={styles.nav}>
-           <Link to="/"> <Logo/></Link>
+           <Logo/>
             <ul>
                 <li>
                     <Link to="/pricing">Pricing</Link>
@@ -14,7 +14,7 @@ const PageNav = () => {
                     <Link to="/product">Product</Link>
                 </li>
                 <li>
-                    <Link to="/login">Login</Link>
+                    <Link to="/login" className={styles.ctaLink}>Login</Link>
                 </li>
             </ul>
         </nav>
