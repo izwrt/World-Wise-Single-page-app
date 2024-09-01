@@ -3,15 +3,16 @@ import Login from "./pages/Login";
 import Homepage from "./pages/Homepage";
 import Pricing from "./pages/Pricing";
 import Product from "./pages/Pricing";
+import "./index.css"
 
 const router = createBrowserRouter([
   {
-    path : "/login",
-    element: <Login/>
+    path: "/",
+    element: <Homepage/>
   },
   {
-    path: "/home",
-    element: <Homepage/>
+    path : "/login",
+    element: <Login/>
   },
   {
     path: "/pricing",
