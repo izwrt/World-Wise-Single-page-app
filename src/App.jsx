@@ -25,8 +25,18 @@ const router = createBrowserRouter([
   },
   {
     path: "/app",
-    element: <AppLayout/>
-  }
+    element: <AppLayout/>,
+    children: [
+      {
+      path: "cities",
+      element: <p>List of cities</p>
+    },
+    {
+      path: "countries",
+      element: <p>countries</p>
+    },
+  ]
+  },
 ]);
 
 
