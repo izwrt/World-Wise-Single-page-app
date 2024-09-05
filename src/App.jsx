@@ -5,6 +5,7 @@ import Pricing from "./pages/Pricing";
 import Product from "./pages/Pricing";
 import "./index.css"
 import AppLayout from "./pages/AppLayout";
+import CityList from "./components/CityList";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
     children: [
       {
       path: "cities",
-      element: <p>List of cities</p>
+      element: <CityList/>
     },
     {
       path: "countries",
