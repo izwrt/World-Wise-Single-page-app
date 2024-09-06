@@ -16,15 +16,16 @@ return(
   <BrowserRouter>
     <Routes>
       <Route index element ={<Homepage/>}/>
-    </Routes>
       <Route index element={<Homepage />} />
       <Route path="product" element={<Product />} />
       <Route path="pricing" element={<Pricing />} />
       <Route path="login" element={<Login />} />
       <Route path="app" element={<AppLayout/>}>
         <Route path="cities" element={<CityList/>}/>
-        <Route paht="coutries" element={<p>Coutrues</p>}/>
+        <Route path="countries" element={<p>Coutrues</p>}/>
+        <Route path="form" element={<p>form</p>}/>
       </Route>
+    </Routes>
 
   
   </BrowserRouter>
