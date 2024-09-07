@@ -7,6 +7,7 @@ import Product from "./pages/Pricing";
 import "./index.css"
 import AppLayout from "./pages/AppLayout";
 import CityList from "./components/CityList";
+import CountryList from "./components/CountryList";
 
 const BASE_URL = "http://localhost:8000/";
 
@@ -46,7 +47,7 @@ return(
       <Route path="app" element={<AppLayout/>}>
       <Route index element={<CityList cities={cities} isLoading={isLoading} />}/>
         <Route path="cities" element={<CityList cities={cities} isLoading={isLoading} />}/>
-        <Route path="countries" element={<p>Coutrues</p>}/>
+        <Route path="countries" element={<CountryList cities={cities} isLoading={isLoading}/>}/>
         <Route path="form" element={<p>form</p>}/>
       </Route>
     </Routes>
