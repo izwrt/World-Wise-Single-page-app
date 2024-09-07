@@ -12,13 +12,15 @@ const BASE_URL = "http://localhost:8000/";
 
 const App = () => {
 
-  const [cities, setCities] = useState({});
+  const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() =>{
     async function fetchCities() {
       try{
         setIsLoading(true);
+        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+        await delay(900);
         const res = await fetch(`${BASE_URL}cities`);
         const data = await res.json();
         setCities(data);
