@@ -1,30 +1,84 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useReducer, useEffect, useContext } from "react";
 
 const BASE_URL = "http://localhost:8000/";
 
 const CitiesContext = createContext()
 
+const intialState = {
+  cities:[],
+  isLoading: false,
+  currentCity: {}
+
+}
+
+function reducer(state,action){
+  switch(action.type){
+    case 'loading':
+      return {
+        ...state,
+        isLoading: true
+      };
+
+    case 'cities/loaded':
+      return {
+        ...state,
+        isLoading: false,
+        cities: action.payload,
+      };
+
+    case 'error':
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      }
+
+    case 'city/loaded':
+      return {
+        ...state,
+        isLoading: false,
+        currentCity: action.payload,
+      }
+
+    case 'city/created':
+      return {
+        ...state,
+        isLoading: false,
+        cities: [...state.cities, action.payload]
+      }
+
+    case 'city/deleted':
+      return {
+        ...state,
+        isLoading: false,
+        cities: state.cities.filter((city) => city.id !== action.payload),
+      }
+
+    default:
+      throw new Error('no condition is found')
+  }
+}
+
 function CitiesProvider({children}){
   
-    const [cities, setCities] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentCity, setCurrentCity] = useState({})
+  const [{ cities, isLoading, currentCity },dispatch] = useReducer(reducer,intialState);
+
+  // const [cities, setCities] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [currentCity, setCurrentCity] = useState({})
 
   useEffect(() =>{
     async function fetchCities() {
       try{
-        setIsLoading(true);
+        dispatch({type:'loading'})
         const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
         await delay(900);
         const res = await fetch(`${BASE_URL}cities`);
         const data = await res.json();
-        setCities(data);
+        dispatch({type: 'cities/loaded', payload: data})
       }
-      catch{
-        alert("Fetch error");
-      }
-      finally{
-        setIsLoading(false);
+      catch{ 
+        dispatch({type: 'error', payload: 'Error while fetching Cities'})
       }
   }
     fetchCities();
@@ -32,24 +86,21 @@ function CitiesProvider({children}){
 
   async function getCity(id){
         try{
-          setIsLoading(true);
+          dispatch({type:'loading'})
           const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
           await delay(900);
           const res = await fetch(`${BASE_URL}cities/${id}`);
           const data = await res.json();
-          setCurrentCity(data);
+          dispatch({type: 'city/loaded', payload: data})
         }
         catch{
-          alert("Fetch error");
-        }
-        finally{
-          setIsLoading(false);
+          dispatch({type: 'error', payload: 'Error while fetching City'})
         }
   }
   
   async function createCity(newCity){
     try{
-      setIsLoading(true);
+      dispatch({type:'loading'})
       const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
       await delay(900);
       const res = await fetch(`${BASE_URL}cities`, {
@@ -61,33 +112,26 @@ function CitiesProvider({children}){
       });
       const data = await res.json();
       
-      setCities(cities => [...cities, data]);
+      dispatch({type: "city/created", payload: data})
 
     }
     catch{
-      alert("creating error");
-    }
-    finally{
-      setIsLoading(false);
+      dispatch({type: 'error', payload: 'Error while creating City'})
     }
 }
 
 async function deleteCity(id){
   try{
-    setIsLoading(true);
+    dispatch({type:'loading'})
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     await delay(900);
     await fetch(`${BASE_URL}cities/${id}`, {
       method: 'DELETE',
     });
-    setCities(cities => cities.filter((city) => city.id !== id));
-
+    dispatch({type:'city/deleted' ,payload: id})
   }
   catch{
-    alert("delete error");
-  }
-  finally{
-    setIsLoading(false);
+    dispatch({type: 'error', payload: 'Error while creating City'})
   }
 }
 
@@ -96,7 +140,6 @@ async function deleteCity(id){
         cities,
         getCity,
         isLoading,
-        setIsLoading,
         currentCity,
         createCity,
         deleteCity,
