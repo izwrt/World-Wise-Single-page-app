@@ -1,18 +1,6 @@
 {
   "cities": [
     {
-      "cityName": "Madrid",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2027-07-15T08:22:53.976Z",
-      "notes": "",
-      "position": {
-        "lat": 40.46635901755316,
-        "lng": -3.7133789062500004
-      },
-      "id": "17806751"
-    },
-    {
       "id": "0795",
       "cityName": "Vila de Rei",
       "country": "Portugal",
@@ -22,6 +10,30 @@
       "position": {
         "lat": "39.65645604812829",
         "lng": "-8.107910156250002"
+      }
+    },
+    {
+      "id": "3e06",
+      "cityName": "Almudevar",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2024-11-18T07:17:10.033Z",
+      "notes": "",
+      "position": {
+        "lat": "42.06560675405716",
+        "lng": "-0.5493164062500001"
+      }
+    },
+    {
+      "id": "8b9e",
+      "cityName": "Tineo",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2024-11-18T07:38:45.004Z",
+      "notes": "",
+      "position": {
+        "lat": "43.43696596521823",
+        "lng": "-6.481933593750001"
       }
     }
   ]

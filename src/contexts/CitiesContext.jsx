@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect, useContext } from "react";
+import { createContext, useReducer, useEffect, useContext, useCallback } from "react";
 
 const BASE_URL = "http://localhost:8000/";
 
@@ -84,9 +84,12 @@ function CitiesProvider({children}){
     fetchCities();
   },[]);
 
-  async function getCity(id){
+  const getCity = useCallback (async function getCity(id){
+    if (Number(id) === currentCity.id) return
+
+    dispatch({type:'loading'})
+
         try{
-          dispatch({type:'loading'})
           const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
           await delay(900);
           const res = await fetch(`${BASE_URL}cities/${id}`);
@@ -96,11 +99,12 @@ function CitiesProvider({children}){
         catch{
           dispatch({type: 'error', payload: 'Error while fetching City'})
         }
-  }
+  },[currentCity.id])
   
   async function createCity(newCity){
+    dispatch({type:'loading'})
+
     try{
-      dispatch({type:'loading'})
       const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
       await delay(900);
       const res = await fetch(`${BASE_URL}cities`, {
@@ -121,8 +125,9 @@ function CitiesProvider({children}){
 }
 
 async function deleteCity(id){
+  dispatch({type:'loading'})
+
   try{
-    dispatch({type:'loading'})
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     await delay(900);
     await fetch(`${BASE_URL}cities/${id}`, {

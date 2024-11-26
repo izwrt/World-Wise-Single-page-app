@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useCities } from "../contexts/CitiesContext";
-import BackButton from "./BackButton";
 import Button from "./Button";
 import styles from "./City.module.css";
 import Spinner from "./Spinner";
@@ -22,11 +21,17 @@ function City() {
 
   useEffect(function(){
     getCity(id);
-  },[id])
+  },[id, getCity])
 
   if(isLoading) return <Spinner/>
 
   const { cityName, emoji, date, notes } = currentCity;
+
+  const onClick = (e) => {
+    e.preventDefault();
+    navigate(-1)
+  }
+
 
   return (
     <div className={styles.city}>
@@ -61,10 +66,7 @@ function City() {
       </div>
 
       <div>
-      <Button type="back"  onClik={(e)=> {
-          e.preventDefault();
-          navigate(-1)
-        }}>&larr; Back</Button> 
+      <Button type="back"  onClick={onClick}>&larr; Back</Button> 
       </div>
     </div>
   );
